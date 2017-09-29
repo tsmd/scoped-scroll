@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Prevent scroll/touch event from bubbling up to parent elements.",
   "main": "lib/scoped-scroll.js",
+  "types": "lib/scoped-scroll.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,7 +22,7 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.76",
-    "lodash": "^4.17.4"
+    "@types/underscore": "^1.8.3",
+    "underscore": "^1.8.3"
   }
 }
