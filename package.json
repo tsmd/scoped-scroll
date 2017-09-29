@@ -1,0 +1,27 @@
+{
+  "name": "scoped-scroll",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lib/scoped-scroll.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsmd/scoped-scroll.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tsmd/scoped-scroll/issues"
+  },
+  "homepage": "https://github.com/tsmd/scoped-scroll#readme",
+  "devDependencies": {
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.76",
+    "lodash": "^4.17.4"
+  }
+}
