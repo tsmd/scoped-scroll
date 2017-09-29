@@ -37,6 +37,8 @@ export class ScopedScroll {
         subtree: true,
       });
     }
+
+    this.refreshMetrics()
   }
 
   destroy () {
@@ -50,9 +52,14 @@ export class ScopedScroll {
     }
   }
 
-  private _onResize () {
+  refreshMetrics () {
     this.scrollHeight = this.element.scrollHeight;
     this.clientHeight = this.element.clientHeight;
+  }
+
+  private _onResize () {
+    this.refreshMetrics()
+
   }
 
   private _onWheel (e: WheelEvent) {
