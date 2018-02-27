@@ -22,6 +22,12 @@ export class ScopedScroll {
   }
 
   init () {
+    if ('overscrollBehavior' in this.element.style) {
+      const elementStyle = this.element.style as any
+      elementStyle.overscrollBehavior = 'contain'
+      return
+    }
+
     this.window.addEventListener('resize', this._onResize, false);
     this.element.addEventListener('wheel', this._onWheel, false);
     this.element.addEventListener('touchstart', this._onTouchStart, false);
