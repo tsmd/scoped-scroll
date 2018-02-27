@@ -71,6 +71,11 @@ export class ScopedScroll {
   refreshMetrics () {
     this.scrollHeight = this.element.scrollHeight
     this.clientHeight = this.element.clientHeight
+
+    const toBeDisabled = this.scrollHeight === this.clientHeight
+    if (this.disabled !== toBeDisabled) {
+      toBeDisabled ? this.disable() : this.enable()
+    }
   }
 
   enable () {
