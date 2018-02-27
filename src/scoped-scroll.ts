@@ -1,6 +1,7 @@
 import { throttle } from 'underscore'
 
 export class ScopedScroll {
+  private disabled = false
 
   private document: Document
   private window: Window
@@ -23,9 +24,8 @@ export class ScopedScroll {
   }
 
   init () {
-    if ('overscrollBehavior' in this.element.style) {
-      const elementStyle = this.element.style as any
-      elementStyle.overscrollBehavior = 'contain'
+    if (this.isOverscrollBehaviorSupported()) {
+      this.setOverscrollBehavior('contain')
       return
     }
 
@@ -73,11 +73,36 @@ export class ScopedScroll {
     this.clientHeight = this.element.clientHeight
   }
 
+  enable () {
+    this.disabled = false
+    this.setOverscrollBehavior('contain')
+  }
+
+  disable () {
+    this.disabled = true
+    this.setOverscrollBehavior('')
+  }
+
+  isOverscrollBehaviorSupported () {
+    return 'overscrollBehavior' in this.element.style
+  }
+
+  setOverscrollBehavior (value: string) {
+    if (this.isOverscrollBehaviorSupported()) {
+      const elementStyle = this.element.style as any
+      elementStyle.overscrollBehavior = value
+    }
+  }
+
   private _onResize () {
     this.refreshMetrics()
   }
 
   private _onWheel (e: WheelEvent) {
+    if (this.disabled) {
+      return
+    }
+
     const scrollTop = this.element.scrollTop
     const isTop = scrollTop === 0
     const isBottom = scrollTop >= this.scrollHeight! - this.clientHeight!
@@ -87,12 +112,20 @@ export class ScopedScroll {
   }
 
   private _onTouchStart (e: TouchEvent) {
+    if (this.disabled) {
+      return
+    }
+
     if (e.targetTouches.length === 1) {
       this.clientY = e.targetTouches[0].clientY
     }
   }
 
   private _onTouchMove (e: TouchEvent) {
+    if (this.disabled) {
+      return
+    }
+
     if (e.targetTouches.length === 1) {
       const clientY = e.targetTouches[0].clientY - this.clientY!
       const scrollTop = this.element.scrollTop
@@ -103,5 +136,4 @@ export class ScopedScroll {
       }
     }
   }
-
 }
