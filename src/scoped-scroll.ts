@@ -40,7 +40,7 @@ export class ScopedScroll {
         childList: true,
         attributes: true,
         characterData: true,
-        subtree: true,
+        subtree: true
       })
     }
 
