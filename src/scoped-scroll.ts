@@ -5,6 +5,7 @@ export class ScopedScroll {
   private document: Document
   private window: Window
 
+  private resizeObserver?: ResizeObserver
   private mutationObserver?: MutationObserver
 
   private scrollHeight? = Infinity
@@ -28,21 +29,26 @@ export class ScopedScroll {
       return
     }
 
-    this.window.addEventListener('resize', this._onResize, false)
+    if ('ResizeObserver' in window) {
+      this.resizeObserver = new ResizeObserver(this._onResize)
+      this.resizeObserver.observe(this.element)
+    } else {
+      this.window.addEventListener('resize', this._onResize, false)
+
+      if ('MutationObserver' in this.window) {
+        this.mutationObserver = new MutationObserver(this._onResize)
+        this.mutationObserver.observe(this.element, {
+          childList: true,
+          attributes: true,
+          characterData: true,
+          subtree: true
+        })
+      }
+    }
+
     this.element.addEventListener('wheel', this._onWheel, false)
     this.element.addEventListener('touchstart', this._onTouchStart, false)
     this.element.addEventListener('touchmove', this._onTouchMove, false)
-
-    // FIXME ほんとうは ResizeObserver を使いたいが、対応しているブラウザがない.
-    if ('MutationObserver' in this.window) {
-      this.mutationObserver = new MutationObserver(this._onResize)
-      this.mutationObserver.observe(this.element, {
-        childList: true,
-        attributes: true,
-        characterData: true,
-        subtree: true
-      })
-    }
 
     this.refreshMetrics()
   }
@@ -52,6 +58,10 @@ export class ScopedScroll {
     this.element.removeEventListener('wheel', this._onWheel)
     this.element.removeEventListener('touchstart', this._onTouchStart)
     this.element.removeEventListener('touchmove', this._onTouchMove)
+
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect()
+    }
 
     if (this.mutationObserver) {
       this.mutationObserver.disconnect()
@@ -65,7 +75,6 @@ export class ScopedScroll {
 
   private _onResize () {
     this.refreshMetrics()
-
   }
 
   private _onWheel (e: WheelEvent) {

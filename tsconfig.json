@@ -20,6 +20,7 @@
     ]
   },
   "files": [
-    "src/scoped-scroll.ts"
+    "src/scoped-scroll.ts",
+    "src/resizeobserver.d.ts"
   ]
 }
