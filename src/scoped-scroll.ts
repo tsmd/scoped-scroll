@@ -5,11 +5,11 @@ export class ScopedScroll {
   private document: Document
   private window: Window
 
-  private mutationObserver: MutationObserver
+  private mutationObserver?: MutationObserver
 
-  private scrollHeight = Infinity
-  private clientHeight = Infinity
-  private clientY: number
+  private scrollHeight? = Infinity
+  private clientHeight? = Infinity
+  private clientY?: number
 
   constructor (private element: HTMLElement) {
     this.document = element.ownerDocument
@@ -65,7 +65,7 @@ export class ScopedScroll {
   private _onWheel (e: WheelEvent) {
     const scrollTop = this.element.scrollTop;
     const isTop = scrollTop === 0;
-    const isBottom = scrollTop >= this.scrollHeight - this.clientHeight;
+    const isBottom = scrollTop >= this.scrollHeight! - this.clientHeight!;
     if (isTop && e.deltaY < 0 || isBottom && e.deltaY > 0) {
       e.preventDefault();
     }
@@ -79,10 +79,10 @@ export class ScopedScroll {
 
   private _onTouchMove (e: TouchEvent) {
     if (e.targetTouches.length === 1) {
-      const clientY = e.targetTouches[0].clientY - this.clientY;
+      const clientY = e.targetTouches[0].clientY - this.clientY!;
       const scrollTop = this.element.scrollTop;
       const isTop = scrollTop === 0;
-      const isBottom = scrollTop >= this.scrollHeight - this.clientHeight;
+      const isBottom = scrollTop >= this.scrollHeight! - this.clientHeight!;
       if (isTop && clientY > 0 || isBottom && clientY < 0) {
         e.preventDefault();
       }
