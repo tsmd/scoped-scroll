@@ -1,7 +1,7 @@
 import { throttle } from 'underscore'
 
 export class ScopedScroll {
-  private disabled = false
+  private disabled = true
 
   private document: Document
   private window: Window
@@ -24,11 +24,6 @@ export class ScopedScroll {
   }
 
   init () {
-    if (this.isOverscrollBehaviorSupported()) {
-      this.setOverscrollBehavior('contain')
-      return
-    }
-
     if ('ResizeObserver' in window) {
       this.resizeObserver = new ResizeObserver(this._onResize)
       this.resizeObserver.observe(this.element)
@@ -46,15 +41,18 @@ export class ScopedScroll {
       }
     }
 
-    this.element.addEventListener('wheel', this._onWheel, false)
-    this.element.addEventListener('touchstart', this._onTouchStart, false)
-    this.element.addEventListener('touchmove', this._onTouchMove, false)
+    if (!this.isOverscrollBehaviorSupported()) {
+      this.element.addEventListener('wheel', this._onWheel, false)
+      this.element.addEventListener('touchstart', this._onTouchStart, false)
+      this.element.addEventListener('touchmove', this._onTouchMove, false)
+    }
 
     this.refreshMetrics()
   }
 
   destroy () {
     this.window.removeEventListener('resize', this._onResize)
+
     this.element.removeEventListener('wheel', this._onWheel)
     this.element.removeEventListener('touchstart', this._onTouchStart)
     this.element.removeEventListener('touchmove', this._onTouchMove)
