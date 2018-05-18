@@ -1,6 +1,6 @@
 {
   "name": "scoped-scroll",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Prevent scroll/touch event from bubbling up to parent elements.",
   "main": "lib/scoped-scroll.js",
   "types": "lib/scoped-scroll.d.ts",
