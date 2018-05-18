@@ -1,14 +1,6 @@
 module.exports = {
-  entry : './index.ts',
+  entry : './index.js',
   output: {
     filename: './index.bundle.js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        loader: 'ts-loader'
-      }
-    ]
   }
 }
