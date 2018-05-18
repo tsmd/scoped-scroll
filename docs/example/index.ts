@@ -1,4 +1,4 @@
-import { ScopedScroll } from '../../lib/scoped-scroll'
+import { ScopedScroll } from 'scoped-scroll'
 
 const element = document.querySelector('section')
 const scopedScroll = new ScopedScroll(element)
