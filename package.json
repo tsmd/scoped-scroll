@@ -19,10 +19,8 @@
   },
   "homepage": "https://github.com/tsmd/scoped-scroll#readme",
   "devDependencies": {
+    "@types/throttle-debounce": "^1.0.0",
+    "throttle-debounce": "^1.0.1",
     "typescript": "^2.7.2"
-  },
-  "dependencies": {
-    "@types/underscore": "^1.8.3",
-    "underscore": "^1.8.3"
   }
 }

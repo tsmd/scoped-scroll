@@ -1,4 +1,4 @@
-import { throttle } from 'underscore'
+import { throttle } from 'throttle-debounce'
 
 export class ScopedScroll {
   private disabled = true
@@ -17,7 +17,7 @@ export class ScopedScroll {
     this.document = element.ownerDocument
     this.window = this.document.defaultView
 
-    this._onResize = throttle(this._onResize.bind(this), 200)
+    this._onResize = throttle(200, this._onResize.bind(this))
     this._onWheel = this._onWheel.bind(this)
     this._onTouchStart = this._onTouchStart.bind(this)
     this._onTouchMove = this._onTouchMove.bind(this)
