@@ -14,8 +14,8 @@ export class ScopedScroll {
   private clientY?: number
 
   constructor (private element: HTMLElement) {
-    this.document = element.ownerDocument
-    this.window = this.document.defaultView
+    this.document = element.ownerDocument!
+    this.window = this.document.defaultView!
 
     this._onResize = throttle(200, this._onResize.bind(this))
     this._onWheel = this._onWheel.bind(this)
